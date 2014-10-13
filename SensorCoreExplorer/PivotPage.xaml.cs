@@ -1,7 +1,4 @@
-﻿using Lumia.Sense;
-using Lumia.Sense.Testing;
-using SensorCoreExplorer.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -24,10 +21,17 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-// The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
+using Lumia.Sense;
+using Lumia.Sense.Testing;
+
+using SensorCoreExplorer.Common;
+
 
 namespace SensorCoreExplorer
 {
+    /// <summary>
+    /// Application main page.
+    /// </summary>
     public sealed partial class PivotPage : Page
     {
         private readonly string EmulatorDeviceName = "virtual";
@@ -83,7 +87,6 @@ namespace SensorCoreExplorer
                 => ChangeSensorCoreActivationStatusAsync(eventArgs.Visible);
 
             pivot.SelectionChanged += OnPivotSelectionChanged;
-
         }
 
         #region NavigationHelper registration
@@ -242,6 +245,7 @@ namespace SensorCoreExplorer
             if (failure != null)
             {
                 MessageDialog dialog;
+
                 switch (SenseHelper.GetSenseError(failure.HResult))
                 {
                     case SenseError.LocationDisabled:
@@ -466,15 +470,6 @@ namespace SensorCoreExplorer
             PlaceControlContainer.Children.Clear();
             StepReadingControlContainer.Children.Clear();
             TrackPointControlContainer.Children.Clear();
-        }
-
-        private static async Task CreateMessageDialog(string message, string title, string label, UICommandInvokedHandler command, bool no)
-        {
-            var dialog = new MessageDialog(message, title);
-            dialog.Commands.Add(new UICommand(label, command));
-            if (no) dialog.Commands.Add(new UICommand("No"));
-
-            await dialog.ShowAsync();
         }
 
         /// <summary>
