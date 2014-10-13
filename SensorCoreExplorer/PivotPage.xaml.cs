@@ -482,13 +482,17 @@ namespace SensorCoreExplorer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnRefreshButtonClicked(object sender, RoutedEventArgs e)
+        private async void OnRefreshButtonClicked(object sender, RoutedEventArgs e)
         {
+            progressBar.Visibility = Visibility.Visible;
             ClearUI();
-            PopulateActivityAsync();
-            PopulatePlacesAsync();
-            PopulateStepsAsync();
-            PopulateTrackPointsAsync();
+
+            await PopulateActivityAsync();
+            await PopulatePlacesAsync();
+            await PopulateStepsAsync();
+            await PopulateTrackPointsAsync();
+
+            progressBar.Visibility = Visibility.Collapsed;
         }
 
         #region UI styles and animations
